@@ -1,42 +1,24 @@
 package org.example.data.observerPatern.subject.impl;
 
-import org.example.data.observerPatern.observer.abstr.Observer;
+import org.example.data.observerPatern.observer.abstr.MyObserver;
 import org.example.data.observerPatern.subject.abstr.Subject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
-public class WeatherData implements Subject {
+public class WeatherData extends Observable {
 
-    private List<Observer> observers;
     private float temperature;
     private float humidity;
     private float pressure;
 
-    public WeatherData() {
-        observers = new ArrayList<>();
-    }
-
-    @Override
-    public void registerObserver(Observer observer) {
-        observers.add(observer);
-    }
-
-    @Override
-    public void removeObserver(Observer observer) {
-        int i = observers.indexOf(observer);
-        if(i>=0)
-            observers.remove(i);
-    }
-
-    @Override
-    public void notifyObserver() {
-        for(Observer observer : observers)
-            observer.update(temperature, humidity, pressure);
-    }
+    public WeatherData() {  }
 
     public void measuresChanged(){
-        notifyObserver();
+        setChanged();
+        notifyObservers();
     }
 
     public void setMeasurements(float temperature, float humidity, float pressure){
@@ -44,5 +26,17 @@ public class WeatherData implements Subject {
         this.humidity = humidity;
         this.pressure = pressure;
         measuresChanged();
+    }
+
+    public float getTemperature() {
+        return temperature;
+    }
+
+    public float getHumidity() {
+        return humidity;
+    }
+
+    public float getPressure() {
+        return pressure;
     }
 }

@@ -1,6 +1,7 @@
 package org.example.controller;
 
 import org.example.data.observerPatern.observer.impl.CurrentConditionsDisplay;
+import org.example.data.observerPatern.observer.impl.TemperatureStatisticDisplay;
 import org.example.data.observerPatern.subject.impl.WeatherData;
 import org.example.view.WeatherDataView;
 
@@ -16,6 +17,7 @@ public class WeatherDataController {
 
     public void launch(){
         CurrentConditionsDisplay currentConditionsDisplay = new CurrentConditionsDisplay(weatherData);
+        TemperatureStatisticDisplay temperatureStatisticDisplay = new TemperatureStatisticDisplay(weatherData);
         weatherDataView.separateOutput();
         weatherData.setMeasurements(35.5f, 50.7f, 25.4f);
         weatherDataView.separateOutput();

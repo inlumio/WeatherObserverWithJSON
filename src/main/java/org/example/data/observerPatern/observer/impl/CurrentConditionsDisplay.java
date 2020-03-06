@@ -1,18 +1,22 @@
 package org.example.data.observerPatern.observer.impl;
 
 import org.example.data.observerPatern.observer.abstr.DisplayElements;
-import org.example.data.observerPatern.observer.abstr.Observer;
+import org.example.data.observerPatern.observer.abstr.MyObserver;
 import org.example.data.observerPatern.subject.impl.WeatherData;
+
+import java.util.Observable;
+import java.util.Observer;
 
 public class CurrentConditionsDisplay implements Observer, DisplayElements {
     private float temperature;
     private float humidity;
     private float pressure;
     private WeatherData weatherData;
+    Observable observable;
 
-    public CurrentConditionsDisplay(WeatherData weatherData) {
-        this.weatherData = weatherData;
-        this.weatherData.registerObserver(this);
+    public CurrentConditionsDisplay(Observable observable) {
+        this.observable = observable;
+        observable.addObserver(this);
     }
 
     @Override
@@ -21,18 +25,23 @@ public class CurrentConditionsDisplay implements Observer, DisplayElements {
     }
 
     @Override
-    public void update(float temperature, float humidity, float pressure) {
-        this.temperature = temperature;
-        this.humidity = humidity;
-        this.pressure = pressure;
-        display();
+    public void update(Observable observable, Object o) {
+        if(observable instanceof WeatherData){
+            WeatherData weatherData = (WeatherData)observable;
+            this.temperature = weatherData.getTemperature();
+            this.humidity = weatherData.getHumidity();
+            this.pressure = weatherData.getPressure();
+            display();
+        }
     }
 
     @Override
     public String toString() {
-        return "Current Conditions:" +
+        return " - Current Conditions:" +
                 "\ntemperature = " + temperature +
                 "\nhumidity = " + humidity +
                 "\npressure=" + pressure;
     }
+
+
 }
