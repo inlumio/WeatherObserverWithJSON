@@ -38,9 +38,9 @@ public class CurrentConditionsDisplay implements Observer, DisplayElements {
     @Override
     public String toString() {
         return " - Current Conditions:" +
-                "\ntemperature = " + temperature +
-                "\nhumidity = " + humidity +
-                "\npressure=" + pressure;
+                "\n\ttemperature = " + temperature +
+                "\n\thumidity = " + humidity +
+                "\n\tpressure=" + pressure;
     }
 
 

@@ -1,6 +1,7 @@
 package org.example;
 
 import org.example.controller.WeatherDataController;
+import org.example.helper.JsonHelper;
 
 public class WeatherObserverApp
 {
