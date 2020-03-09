@@ -12,6 +12,7 @@ public class InputHelper {
     private WeatherDataView view;
     private static ResourceBundle bundle;
     private Map<Integer, List<String> > citiesCustom;
+    private static int count;
 
     public InputHelper(ResourceBundle bundle){
         view = new WeatherDataView();
@@ -20,17 +21,12 @@ public class InputHelper {
     }
 
     public List<String> selectCity(){
-        int count = 0;
+        count = 0;
+        view.printlnMessage(bundle.getString("selectCities"));
+        for (Map.Entry<Integer, List<String>> city : citiesCustom.entrySet())
+            System.out.println(city.getKey() + " - " + city.getValue().get(0));
         while(true) {
-            if (count == 5){
-                view.printlnMessage(bundle.getString("muchAttempt"));
-                System.exit(0);
-            }
-            view.printlnMessage(bundle.getString("selectCities"));
-            for (Map.Entry<Integer, List<String>> city : citiesCustom.entrySet())
-                System.out.println(city.getKey() + " - " + city.getValue().get(0));
-            view.printMessage(bundle.getString("selectedCityByUser"));
-            int input = checkInput();
+            int input = checkInput(bundle.getString("selectedCityByUser"));
             if(citiesCustom.containsKey(input))
                 return citiesCustom.get(input);
             else {
@@ -40,9 +36,14 @@ public class InputHelper {
         }
     }
 
-    public int checkInput(){
+    public int checkInput(String message){
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         while (true){
+            if (count == 5){
+                view.printlnMessage(bundle.getString("muchAttempt"));
+                System.exit(0);
+            }
+            view.printMessage(message);
             try {
                 String input = bufferedReader.readLine();
                 return Integer.parseInt(input);
@@ -52,6 +53,7 @@ public class InputHelper {
             catch (NumberFormatException e){
                 view.printlnMessage(bundle.getString("wrongInput"));
             }
+            count++;
         }
     }
 }
