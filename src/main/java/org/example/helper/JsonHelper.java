@@ -14,14 +14,16 @@ public class JsonHelper {
 
     private JSONObject weatherParameters;
 
-    public JsonHelper(){
-        weatherParameters = readJSON();
-    }
+    private String mainBodyOfUrl = "http://api.openweathermap.org/data/2.5/weather";
+    private String appid = "bad4092dcb7625876d4f8721366d5e9c";
 
-    public JSONObject readJSON(){
+    public JsonHelper(){ }
+
+    public void readJSON(String cityId){
         try{
             StringBuilder stringBuilder = new StringBuilder();
-            URL url=new URL("http://api.openweathermap.org/data/2.5/weather?id=703448&APPID=bad4092dcb7625876d4f8721366d5e9c");
+            //"http://api.openweathermap.org/data/2.5/weather?id=703448&APPID=bad4092dcb7625876d4f8721366d5e9c"
+            URL url=new URL(mainBodyOfUrl + "?"+ "id=" +cityId + "&" + "APPID=" + appid);
             URLConnection urlcon=url.openConnection();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlcon.getInputStream()));
             String line;
@@ -29,13 +31,10 @@ public class JsonHelper {
                 stringBuilder.append(line);
             }
             JSONObject json = new JSONObject(stringBuilder.toString());
-            JSONObject necessaryParam = json.getJSONObject("main");
+            weatherParameters = json.getJSONObject("main");
 
-            return necessaryParam;
 
         }catch(Exception e){System.out.println(e);}
-
-        return null;
 
     }
 
