@@ -24,7 +24,7 @@ public class InputHelper {
         count = 0;
         view.printlnMessage(bundle.getString("selectCities"));
         for (Map.Entry<Integer, List<String>> city : citiesCustom.entrySet())
-            System.out.println(city.getKey() + " - " + city.getValue().get(0));
+            view.printlnMessage(city.getKey() + " - " + city.getValue().get(0));
         while(true) {
             int input = checkInput(bundle.getString("selectedCityByUser"));
             if(citiesCustom.containsKey(input))
